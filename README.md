@@ -5,6 +5,8 @@
         Example : 
         '''
             # python cli_pretty_table.py --json_raw '[{"name":"amr","age":"20"},{"name":"hamed","age":"32"}]'
+        '''
+
             +-------+-----+
             | name  | age |
             +-------+-----+
@@ -12,5 +14,4 @@
             +-------+-----+
             | hamed | 32  |
             +-------+-----+
-        '''
-    --json_file (not operational yet)
+            --json_file (not operational yet)
