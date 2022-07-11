@@ -8,8 +8,17 @@ import json
 import sys
 import re
 
-def cli_pretty_table(list_of_dictionaries):
-    table = Texttable(max_width=120)
+def _strip_string(input_string):
+    try :
+        input_string = str(input_string).replace(' ','')
+        input_string = input_string.replace('\r','')
+        input_string = input_string.replace('\n','')
+    except Exception as e :
+        print(e)
+    return input_string
+
+def _to_table(list_of_dictionaries):
+    table = Texttable(max_width=0)
 
     # Adding Column names to table
     column_names = []
@@ -23,15 +32,18 @@ def cli_pretty_table(list_of_dictionaries):
         row_to_add = []
         for cell in column_names : 
             # Usig exception handling to avoid error if column does not exist in a row 
+            cell_data = ''
             try:
                 row_to_add.append(item[cell])
             except:
                 row_to_add.append('')
+            # print(cell_data)
         table.add_row(row_to_add)
     print(table.draw())
-    return
+    # return table.draw()
+    return 
 
-def main():
+def cli_pretty_table():
     parser = argparse.ArgumentParser()
     parser.add_argument("--json_raw", help="input a list of dictionaries - example '[{\"name\":\"amr\",\"age\":\"20\"}]' ")
     parser.add_argument("--json_file", help="input json file path")
@@ -40,23 +52,22 @@ def main():
     if not any(vars(args).values()):
         raise ValueError('invalid input , type --help')
     # Add list bracket if not present in input
-    input_string = args.json_raw
-    input_string = input_string.replace(' ','')
-    input_string = input_string.replace('\r','')
-    input_string = input_string.replace('\n','')
-    print(input_string)
+    input_string = _strip_string(args.json_raw)
     if not re.match(r"^\[",input_string) and not re.match(r"\]$",input_string):
         input_string = '['+input_string+']'
     else:
         input_string = input_string
     # Confirm correct json format 
     try:
-        json.parse(input_string)
-    except :
-        raise ValueError('invalid json format')
-    input_data = json.loads(input_string)
-    # Main for testing the scipt :     
-    cli_pretty_table(input_data)
+        input_data = json.loads(input_string)
+    except Exception as e :
+        raise ValueError('invalid Json format')
+        print(e)
+    # Convert to table
+    _to_table(input_data)
+
+def main():
+    cli_pretty_table()
 
 if __name__ == "__main__":
     main()
