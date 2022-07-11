@@ -13,4 +13,6 @@
             | hamed | 32  |
             +-------+-----+
 
-    --json_file (not operational yet)
+    --json_file file_path 
+        Example : 
+            # python cli_pretty_table.py --json_file test.json
