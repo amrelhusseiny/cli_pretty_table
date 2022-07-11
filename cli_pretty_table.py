@@ -6,9 +6,10 @@ from texttable import Texttable
 import argparse
 import json
 import sys
+import re
 
 def cli_pretty_table(list_of_dictionaries):
-    table = Texttable(max_width=100)
+    table = Texttable(max_width=120)
 
     # Adding Column names to table
     column_names = []
@@ -32,11 +33,30 @@ def cli_pretty_table(list_of_dictionaries):
 
 def main():
     parser = argparse.ArgumentParser()
-    parser.add_argument("--json", help="input a list of dictionaries")
+    parser.add_argument("--json_raw", help="input a list of dictionaries - example '[{\"name\":\"amr\",\"age\":\"20\"}]' ")
+    parser.add_argument("--json_file", help="input json file path")
     args = parser.parse_args()
-    print(json.loads(args.json))
+    # Confirm command has input 
+    if not any(vars(args).values()):
+        raise ValueError('invalid input , type --help')
+    # Add list bracket if not present in input
+    input_string = args.json_raw
+    input_string = input_string.replace(' ','')
+    input_string = input_string.replace('\r','')
+    input_string = input_string.replace('\n','')
+    print(input_string)
+    if not re.match(r"^\[",input_string) and not re.match(r"\]$",input_string):
+        input_string = '['+input_string+']'
+    else:
+        input_string = input_string
+    # Confirm correct json format 
+    try:
+        json.parse(input_string)
+    except :
+        raise ValueError('invalid json format')
+    input_data = json.loads(input_string)
     # Main for testing the scipt :     
-    # cli_pretty_table(args.json)
+    cli_pretty_table(input_data)
 
 if __name__ == "__main__":
     main()
