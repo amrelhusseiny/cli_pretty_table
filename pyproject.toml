@@ -1,0 +1,22 @@
+[project]
+name = "cli_pretty_test"
+version = "0.0.1"
+authors = [
+  { name="Amr ElHusseiny", email="amroashram@hotmail.com" },
+]
+description = "converts a 2d dictionary to a CLI pretty table "
+readme = "README.md"
+license = { file="LICENSE" }
+requires-python = ">=3.6"
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "License :: OSI Approved :: MIT License",
+    "Operating System :: OS Independent",
+]
+
+[project.urls]
+"Homepage" = "https://github.com/amroashram/cli_pretty_table"
+
+[build-system]
+requires = ["setuptools>=61.0","texttable==1.6.4"]
+build-backend = "setuptools.build_meta"

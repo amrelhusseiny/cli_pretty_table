@@ -10,7 +10,9 @@ import re
 
 def _strip_string(input_string):
     try :
-        input_string = str(input_string).replace([' ','\r','\n'],'')
+        input_string = str(input_string).replace(' ','')
+        input_string = input_string.replace('\n','')
+        input_string = input_string.replace('\r','')
     except Exception as e :
         print(e)
     return input_string

@@ -1,0 +1,5 @@
+colorama==0.4.4
+pyparsing==3.0.9
+shellingham==1.4.0
+texttable==1.6.4
+typer==0.3.2
